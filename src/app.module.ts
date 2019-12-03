@@ -4,20 +4,19 @@ import { AppService } from './app.service';
 import { NextMiddleware, NextModule } from '@nestpress/next/dist';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
-import { getConnectionOptions } from 'typeorm';
-import { GraphqlTemplateModule } from '../graphql-template/graphql-template.module';
+import { TodoModule } from '../todo/todo.module';
 
 @Module({
   imports: [
     NextModule,
     TypeOrmModule.forRoot(),
-    GraphqlTemplateModule,
     GraphQLModule.forRoot({
       debug: true,
       playground: true,
       installSubscriptionHandlers: true,
-      autoSchemaFile: 'schema.gql',
+      autoSchemaFile: 'schema.graphql',
     }),
+    TodoModule,
   ],
   controllers: [AppController],
   providers: [AppService],

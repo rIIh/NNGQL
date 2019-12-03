@@ -9,6 +9,7 @@
       "dom.iterable",
       "esnext"
     ],
+    "sourceMap": true,
     "strict": true,
     "noEmit": true,
     "allowJs": true,
@@ -17,6 +18,7 @@
     "isolatedModules": true,
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
+    "strictPropertyInitialization": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "incremental": true

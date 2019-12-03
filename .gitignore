@@ -6,6 +6,7 @@
 # Database
 database.sqlite
 schema.gql
+schema.graphql
 
 # Logs
 logs

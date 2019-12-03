@@ -6,6 +6,9 @@
     "outDir": ".next/production-server"
   },
   "include": [
-    "src"
+    "src",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js"
   ]
 }
