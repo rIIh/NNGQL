@@ -1,12 +1,16 @@
 import * as React from 'react';
-import { useMutation, useQuery } from '@apollo/react-hooks';
+import {useMutation, useQuery} from '@apollo/react-hooks';
 import gql from 'graphql-tag';
-import { useState } from 'react';
+import {useState} from 'react';
+import {Container, Row, Col, InputGroup, Button, FormControl, FormCheck} from 'react-bootstrap';
+import classNames from 'classnames';
+import {TodoComponent} from './components/todo';
+import {TodoForm} from './components/todoForm';
 
 interface Todo {
-  id: number;
-  title: string;
-  completed: boolean;
+    id: number;
+    title: string;
+    completed: boolean;
 }
 
 const TODOS = gql`
@@ -41,61 +45,62 @@ const SWITCH_STATE = gql`
     }
 `;
 
+function resolveTodoClass(todo: Todo) {
+    return classNames({
+        completed: todo.completed,
+    });
+}
+
+enum SortDescriptor {
+    None,
+    Ascending,
+    Descending,
+}
+
 export default function() {
-  const { error, loading, data, refetch } = useQuery(TODOS);
-  const [create] = useMutation(CREATE_TODO);
-  const [remove] = useMutation(DELETE_TODO);
-  const [switchState] = useMutation(SWITCH_STATE);
-  const [newTodoTitle, setNewTodoTitle] = useState('Hello world');
-  if (error) {
-    return <p>Failed to fetch todos</p>;
-  }
-  if (loading) {
-    return <p>Loading data</p>;
-  }
-  return <div className='todoContainer'>
-    <input type='text' value={newTodoTitle} onChange={e => setNewTodoTitle(e.target.value)}/>
-    <button onClick={e => create({
-      variables: {
-        title: newTodoTitle,
-      },
-    }).then(_ => refetch())}>
-      Create
-    </button>
-    {
-      data.todos.map((todo: Todo) => (
-          <div className='todoRow' key={todo.id}>
-            <input type='checkbox' checked={todo.completed} onChange={e => switchState({
-              variables: {
-                id: todo.id,
-              },
-            }).then(_ => refetch())}/>
-            <p className={todo.completed ? 'completed' : ''}>{todo.title}</p>
-            <button onClick={e => remove({
-              variables: {
-                id: todo.id,
-              },
-            }).then(_ => refetch())}>
-              Remove
-            </button>
-          </div>
-        ),
-      )
+    const [todos, setTodos] = useState([]);
+    const [filter, setFilter] = useState({
+        sortDirection: SortDescriptor.None,
+        showCompleted: true,
+        showUncompleted: true,
+    });
+
+    const {error, refetch} = useQuery(TODOS, {
+        ssr: true,
+        fetchPolicy: 'cache-and-network',
+        onCompleted: data1 => {
+            setTodos(() => data1.todos);
+        }});
+
+    if (error) {
+        return <p>Failed to fetch todos</p>;
     }
-    <style jsx>{`
-      div.todoContainer {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-content: center;
-        justify-content: space-around;
-      }
-      div.todoRow * {
-        display: inline;
-      }
-      p.completed {
-        text-line-through: single;
-      }
-    `}</style>
-  </div>;
+    return (
+        <Container fluid={true} className='pt-4'>
+            <Row className='justify-content-center'>
+                <Col md={6} className='align-items-center'>
+                    <h1 className='text-center'>Your Todos</h1>
+                    <TodoForm onChange={refetch} />
+                    <FormControl value={filter.sortDirection.toString()}
+                                 className='mb-2'
+                                 as='select'>
+                        <option value={0}>None</option>
+                        <option value={1}>Ascending</option>
+                        <option value={-1}>Descending</option>
+                    </FormControl>
+                    {
+                        todos.sort((a: Todo, b: Todo) => {
+                            if (filter.sortDirection === 1) {
+                                return a.completed ? 1 : 0;
+                            } else if (filter.sortDirection === -1) {
+                                return a.completed ? 0 : 1;
+                            } else { return 0; }
+                        }).map((todo: Todo) => {
+                            return <TodoComponent key={todo.id} todo={todo} onChange={refetch}/>;
+                        })
+                    }
+                </Col>
+            </Row>
+        </Container>
+    );
 }
