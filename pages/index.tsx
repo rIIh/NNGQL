@@ -52,15 +52,21 @@ function resolveTodoClass(todo: Todo) {
 }
 
 enum SortDescriptor {
-    None,
-    Ascending,
-    Descending,
+    None= 0,
+    CompletedAtTop,
+    CompletedAtBottom = -1,
+}
+
+interface TodoFilter {
+    sortDirection: SortDescriptor;
+    showCompleted: boolean;
+    showUncompleted: boolean;
 }
 
 export default function() {
     const [todos, setTodos] = useState([]);
     const [filter, setFilter] = useState({
-        sortDirection: SortDescriptor.None,
+        sortDirection: SortDescriptor.CompletedAtBottom,
         showCompleted: true,
         showUncompleted: true,
     });
@@ -81,21 +87,37 @@ export default function() {
                 <Col md={6} className='align-items-center'>
                     <h1 className='text-center'>Your Todos</h1>
                     <TodoForm onChange={refetch} />
-                    <FormControl value={filter.sortDirection.toString()}
+                    <FormControl value={filter.sortDirection.toString(10)}
                                  className='mb-2'
-                                 as='select'>
+                                 as='select' onChange={(event: React.FormEvent<FormControl & HTMLInputElement>) => {
+                        const inputValue = parseInt(event.currentTarget.value, 10);
+                        setFilter((prevState: TodoFilter) => {
+                            return {
+                                ...prevState,
+                                sortDirection: inputValue,
+                            };
+                        });
+                        console.log(SortDescriptor[filter.sortDirection]);
+
+                    }}>
                         <option value={0}>None</option>
-                        <option value={1}>Ascending</option>
-                        <option value={-1}>Descending</option>
+                        <option value={1}>Completed at top</option>
+                        <option value={-1}>Completed at bottom</option>
                     </FormControl>
                     {
-                        todos.sort((a: Todo, b: Todo) => {
-                            if (filter.sortDirection === 1) {
-                                return a.completed ? 1 : 0;
-                            } else if (filter.sortDirection === -1) {
-                                return a.completed ? 0 : 1;
+                        todos.concat().sort((a: Todo, b: Todo) => {
+                            if (filter.sortDirection === -1) {
+                                return a.completed ? 1 : -1;
+                            } else if (filter.sortDirection === 1) {
+                                return a.completed ? -1 : 1;
                             } else { return 0; }
                         }).map((todo: Todo) => {
+                            return <TodoComponent key={todo.id} todo={todo} onChange={refetch}/>;
+                        })
+                    }
+                    ---------------------------------------
+                    {
+                        todos.map((todo: Todo) => {
                             return <TodoComponent key={todo.id} todo={todo} onChange={refetch}/>;
                         })
                     }

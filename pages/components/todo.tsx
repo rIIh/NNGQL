@@ -42,20 +42,27 @@ export const TodoComponent = ({todo, onChange}: TodoProps) => {
             <InputGroup.Prepend>
                 <InputGroup.Checkbox checked={todo.completed}
                                      onChange={() => switchState({
-                                                            variables: {
-                                                                id: todo.id,
-                                                            },
-                                                        }).then(onChange)}/>
+                                         variables: {
+                                             id: todo.id,
+                                         },
+                                     }).then(onChange)}/>
             </InputGroup.Prepend>
-            <FormControl disabled={true} value={todo.title} />
+            <FormControl disabled={true} value={todo.title}/>
             <InputGroup.Append>
                 <Button variant='outline-danger'
-                            onClick={() => remove({
-                                variables: {
-                                    id: todo.id,
-                                },
-                            }).then(onChange)}>Remove</Button>
+                        onClick={() => remove({
+                            variables: {
+                                id: todo.id,
+                            },
+                        }).then(onChange)}>Remove</Button>
             </InputGroup.Append>
+            <style jsx>{
+                `
+                .form-control:disabled {
+                  background-color: white !important;
+                }`
+            }
+            </style>
         </InputGroup>
     );
 };
