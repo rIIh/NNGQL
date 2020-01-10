@@ -12,6 +12,7 @@ class MyApp extends App {
                 <Head>
                     <title>Todos</title>
                     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                    <script src="https://kit.fontawesome.com/289b40fec9.js" crossOrigin="anonymous"/>
                 </Head>
                 <Component {...pageProps} />
             </ApolloProvider>

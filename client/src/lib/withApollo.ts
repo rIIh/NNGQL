@@ -20,7 +20,7 @@ export default withApollo(
     ({ initialState }) =>
         new ApolloClient({
             link: link,
-            ssrMode: !process.browser,
+            ssrMode: process.env.NODE_ENV === 'production',
             cache: new InMemoryCache()
             //  rehydrate the cache using the initial data passed from the server:
                 .restore(initialState || {}),

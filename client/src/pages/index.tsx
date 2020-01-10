@@ -69,7 +69,7 @@ export default function () {
                                                             };
                                                         });
                                                     }}>
-                                                <option value={0}>None</option>
+                                                <option value={0}>none</option>
                                                 <option value={1}>top</option>
                                                 <option value={-1}>bottom</option>
                                             </select>
@@ -99,8 +99,13 @@ export default function () {
                     }
                 </div>
                 <p className="columns is-centered has-text-centered has-text-grey-light is-size-7">
-                    Double-click to edit a todo<br/>
-                    Created by ratiih
+                    Double-click to edit a todo
+                </p>
+                <p className="columns is-centered has-text-centered has-text-grey-light is-size-7">
+                    Created by
+                    <a href="https://github.com/rIIh/todos"><span className="icon is-small" style={{ marginLeft: '5px' }}>
+                      <i className="fab fa-github"/>
+                    </span>ratiih</a>
                 </p>
             </div>
         </section>

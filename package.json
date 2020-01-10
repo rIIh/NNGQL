@@ -8,6 +8,7 @@
     "dev": "concurrently -k \"npm run dev --prefix client\" \"npm run dev --prefix server\"",
     "bootstrap:client": "cd client && npm install",
     "bootstrap:server": "cd server && npm install",
+    "build": "cd client && npm run build",
     "postinstall": "npm run bootstrap:client ; npm run bootstrap:server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

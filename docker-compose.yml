@@ -6,8 +6,8 @@ services:
     env_file:
       - .env
     ports:
-      - ${SERVER_PORT}:${SERVER_PORT}
-      - ${CLIENT_PORT}:${CLIENT_PORT}
+      - ${SERVER_PORT:-4000}:${SERVER_PORT:-4000}
+      - ${CLIENT_PORT:-3000}:${CLIENT_PORT:-3000}
 
   client:
     depends_on:
