@@ -4,7 +4,7 @@
 **/.next
 
 # Database
-database.sqlite
+**/*.sqlite
 schema.gql
 schema.graphql
 
@@ -38,3 +38,6 @@ lerna-debug.log*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# Environment
+.env

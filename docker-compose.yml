@@ -3,6 +3,8 @@ services:
   server:
     build: ./server
     container_name: todos-server
+    volumes:
+      - ./server/database:/usr/src/app/database
     env_file:
       - .env
     ports:

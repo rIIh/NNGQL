@@ -9,7 +9,7 @@ require('dotenv').config({ path: require('find-config')('.env') });
 async function main() {
     await createConnection({
         type: 'sqlite',
-        database: './database.sqlite',
+        database: './database/db.sqlite',
         entities: [Todo],
         logging: true,
         synchronize: true,
