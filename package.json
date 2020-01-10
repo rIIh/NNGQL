@@ -1,10 +1,14 @@
 {
-  "name": "todo",
+  "name": "todos_app",
   "version": "1.0.0",
-  "description": "Todo app written with React and GraphQL",
-  "main": "server/index.ts",
+  "description": "Todos Application on NextJS + GraphQL",
+  "main": "index.js",
   "scripts": {
-    "start": "ts-node --project tsconfig.json server/index.ts",
+    "start": "concurrently -k \"npm start --prefix client\" \"npm start --prefix server\"",
+    "dev": "concurrently -k \"npm run dev --prefix client\" \"npm run dev --prefix server\"",
+    "bootstrap:client": "cd client && npm install",
+    "bootstrap:server": "cd server && npm install",
+    "postinstall": "npm run bootstrap:client ; npm run bootstrap:server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -12,9 +16,11 @@
     "url": "git+https://github.com/rIIh/TodoApp.git"
   },
   "keywords": [
+    "todo",
+    "next",
     "react",
     "graphql",
-    "todo"
+    "fastify"
   ],
   "author": "ratiih",
   "license": "MIT",
@@ -22,14 +28,13 @@
     "url": "https://github.com/rIIh/TodoApp/issues"
   },
   "homepage": "https://github.com/rIIh/TodoApp#readme",
-  "dependencies": {
-    "typeorm": "^0.2.22",
-    "@hoalongntc/typegraphql": "^0.15.2",
-    "fastify": "^2.11.0",
-    "fastify-gql": "^2.1.0clea"
-  },
   "devDependencies": {
-    "ts-node": "^8.5.4",
-    "typescript": "^3.7.4"
+    "concurrently": "^5.0.2",
+    "prettier": "^1.19.1",
+    "typescript": "^3.7.4",
+    "eslint": "^6.8.0",
+    "@typescript-eslint/parser": "^2.15.0",
+    "@typescript-eslint/eslint-plugin": "^2.15.0",
+    "eslint-plugin-jsx": "^0.1.0"
   }
 }
