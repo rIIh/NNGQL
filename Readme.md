@@ -10,14 +10,13 @@ Used packages:
 - **typeorm** with **type-graphql**
 - **NextJS** + custom server on **express**
 
-
 ## Project Status
 
 This project is currently in development. Users can perform simple CRUD operations with todos. Animations is in progress.
 
 ## Project Demo
 
-[ LINK ]
+[**DEMO**](http://todos.rathive.tk)
 
 ## Installation and Setup Instructions
 
@@ -46,6 +45,26 @@ To Visit Web Client:
 To Access GraphQL Playground: 
 
 `localhost:4000/playground`
+
+## Deployment
+
+There ready to deploy bash script
+
+It assumes that you have `docker`, `image registry`, `traefik` on remote and `docker`, `docker-compose` on host.
+It uses **SSH** connection to remote, keep it in mind.
+
+I didn't test deploy with default docker hub image registry. 
+If you don't need private registry remove `${REGISTRY}` variable from `docker-compose.traefik.yml` and try it.
+
+Tweak the `docker-compose.traefik.yml` with traefik labels to your needs.
+
+Fill `.env` according to `.env.example`. Variables are nullable and have default values from `.env.example`.
+
+When ready to deploy run
+
+`sudo chmod +x ./.deploy.traefik.sh`
+
+`./.deploy.traefik.sh yourdomain.com registry.host.com<optional>`
 
 ## Reflection
 

@@ -9,10 +9,7 @@ interface TodoFormProps {
 
 const TodoForm = ({ onChange, className }: TodoFormProps & React.ComponentProps<'div'>) => {
     const [create] = useMutation(TODO.CREATE, {
-        onError(error) {
-            console.error(error.message);
-            alert(error.message);
-        },
+      onError: alert,
     });
     const [state, setState] = useState({
         title: '',

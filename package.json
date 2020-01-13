@@ -8,9 +8,11 @@
     "dev": "concurrently -k \"npm run dev --prefix client\" \"npm run dev --prefix server\"",
     "bootstrap:client": "cd client && npm install",
     "bootstrap:server": "cd server && npm install",
-    "build": "cd client && npm run build",
+    "build:client": "cd client && npm run build",
+    "build:server": "cd server && npm run build",
+    "build": "npm run build:server ; npm run build:client",
     "postinstall": "npm run bootstrap:client ; npm run bootstrap:server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "eslint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -21,14 +23,15 @@
     "next",
     "react",
     "graphql",
-    "fastify"
+    "fastify",
+    "traefik"
   ],
   "author": "ratiih",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/rIIh/TodoApp/issues"
+    "url": "https://github.com/rIIh/todos/issues"
   },
-  "homepage": "https://github.com/rIIh/TodoApp#readme",
+  "homepage": "https://github.com/rIIh/todos#readme",
   "devDependencies": {
     "concurrently": "^5.0.2",
     "prettier": "^1.19.1",

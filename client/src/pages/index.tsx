@@ -5,7 +5,6 @@ import TodoForm from './components/todoForm';
 import { Todo, TODO } from '../gql/todoQueries';
 import './styles/styles.scss';
 
-// eslint-disable-next-block no-magic-numbers
 enum SortDescriptor {
     None = 0,
     CompletedAtTop = 1,
@@ -27,8 +26,6 @@ export default function () {
     });
 
     const { error, refetch } = useQuery(TODO.LIST, {
-        ssr: true,
-        fetchPolicy: 'cache-and-network',
         onCompleted: data1 => {
             setTodos(() => data1.todos);
         },

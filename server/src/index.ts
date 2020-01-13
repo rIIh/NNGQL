@@ -5,25 +5,35 @@ import { Todo } from './graphql/entities/todo';
 import fastify = require('fastify');
 
 require('dotenv').config({ path: require('find-config')('.env') });
+const PORT = process.env.SERVER_PORT || '4000';
+const CLIENT_PORT = process.env.CLIENT_PORT || '3000';
+const dev = process.env.NODE_ENV !== 'production';
 
 async function main() {
+    console.log('Creating ORM connection');
     await createConnection({
         type: 'sqlite',
-        database: './database/db.sqlite',
+        database: './db.sqlite',
         entities: [Todo],
-        logging: true,
+        logging: dev,
         synchronize: true,
     });
 
+    console.log('Creating GraphQL schema');
     const schema = await createGraphQLSchema();
 
+    console.log('Creating Fastify application');
     const app = fastify({
-        logger: 'debug',
+        logger: dev ? 'debug' : 'silent',
     });
 
     app.register(require('fastify-cors'), {
-        origin: 'http://localhost:3001',
+        origin: 'http://localhost:' + CLIENT_PORT,
     });
+
+    app.get('/', ((request, reply) => {
+        reply.send('Hello world');
+    }));
 
     app.register(require('fastify-gql'), {
         schema,
@@ -36,7 +46,7 @@ async function main() {
         jit: 1,
     });
 
-    app.listen(process.env.SERVER_PORT || '4000').then(() => console.log('App listen on port ' + process.env.SERVER_PORT));
+    app.listen(parseInt(PORT), '0.0.0.0', ((err, address) => console.log('GraphQL Server listen on port ' + address)));
 }
 
 main().then(() => {});

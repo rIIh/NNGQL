@@ -8,14 +8,13 @@ services:
     env_file:
       - .env
     ports:
-      - ${SERVER_PORT:-4000}:${SERVER_PORT:-4000}
       - ${CLIENT_PORT:-3000}:${CLIENT_PORT:-3000}
 
   client:
-    depends_on:
-      - server
     build: ./client
     container_name: todos-client
-    network_mode: service:server
+    depends_on:
+      - server
     env_file:
       - .env
+    network_mode: service:server

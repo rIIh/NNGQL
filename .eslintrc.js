@@ -42,10 +42,11 @@ module.exports = {
         "no-magic-numbers": [
             "error",
             {
-                "ignore": [1,-1,0,10,2, 400, 404],
+                "ignore": [1, -1, 0, 10, 2, 24, 60, 1000, 400, 404],
                 "ignoreArrayIndexes": true,
             }
         ],
+        "no-multiple-empty-lines": "error",
         "comma-dangle": ["error", "always-multiline"],
         "curly": "error"
     }

@@ -4,13 +4,13 @@
   "description": "Todo app written with React and GraphQL",
   "main": "src/index.ts",
   "scripts": {
-    "start": "ts-node --project tsconfig.json src/index.ts",
+    "start": "node dist/index.js",
     "dev": "ts-node-dev --project tsconfig.json --inspect=5656 src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc --project tsconfig.json"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rIIh/TodoApp.git"
+    "url": "git+https://github.com/rIIh/todos.git"
   },
   "keywords": [
     "react",
@@ -20,9 +20,9 @@
   "author": "ratiih",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/rIIh/TodoApp/issues"
+    "url": "https://github.com/rIIh/todos/issues"
   },
-  "homepage": "https://github.com/rIIh/TodoApp#readme",
+  "homepage": "https://github.com/rIIh/todos#readme",
   "dependencies": {
     "typeorm": "^0.2.22",
     "type-graphql": "^0.17.6",

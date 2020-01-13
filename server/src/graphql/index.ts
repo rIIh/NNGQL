@@ -9,9 +9,4 @@ export async function createGraphQLSchema() {
         emitSchemaFile: './schema.graphql',
     });
     return makeExecutableSchema({ typeDefs, resolvers });
-    // return await buildType
-    // return await buildSchema({
-    //     resolvers: [
-    //         TodoResolver
-    //     ]})
 }
