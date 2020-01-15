@@ -27,8 +27,8 @@ services:
       - web
       - internal
     labels:
-      - traefik.http.routers.todos-server.rule=Host(`todos.${REMOTE:-localhost}`)
-      - "traefik.docker.network=web"
+      - traefik.http.routers.todos.rule=Host(`todos.${REMOTE:-localhost}`)
+      - traefik.docker.network=web
 
 volumes:
   todos-data:
